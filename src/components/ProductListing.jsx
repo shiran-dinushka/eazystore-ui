@@ -3,9 +3,9 @@ import ProductCard from "./ProductCard";
 
 export default function ProductListing({ products }) {
   return (
-    <div className="product-listing-container">
-      <div className="product-listing-grid">
-        {products.lenght > 0 ? (
+    <div className="product-listings-container">
+      <div className="product-listings-grid">
+        {products.length > 0 ? (
           products.map((product) => (
             <ProductCard key={product.productId} product={product} />
           ))
