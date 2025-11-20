@@ -3,9 +3,9 @@ import PageTile from "./PageTile";
 
 export default function PageHeading({ title, children }) {
   return (
-    <div className="page-heading-container">
+    <div className="text-center max-w-xl my-6 px-4 mx-auto">
       <PageTile title={title} />
-      <p className="page-heading-paragraph">{children}</p>
+      <p className="font-primary leading-6 text-gray-600">{children}</p>
     </div>
   );
 }
