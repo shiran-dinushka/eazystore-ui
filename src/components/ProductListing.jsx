@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState, useMemo } from "react";
 import ProductCard from "./ProductCard";
 import SearchBox from "./SearchBox";
 import Dropdown from "./Dropdown";
@@ -7,30 +7,57 @@ const sortList = ["Popularity", "Price Low to High", "Price High to Low"];
 
 export default function ProductListing({ products }) {
   const [searchText, setSearchText] = useState("");
+  const [selectedSort, setSelectedSort] = useState("Popularity");
+
+  const filteredAndSortedProducts = useMemo(() => {
+    if (!Array.isArray(products)) return [];
+
+    let filteredProducts = products.filter(
+      (product) =>
+        product.name.toLowerCase().includes(searchText.toLowerCase()) ||
+        product.description.toLowerCase().includes(searchText.toLowerCase())
+    );
+
+    return filteredProducts.slice().sort((a, b) => {
+      switch (selectedSort) {
+        case "Price Low to High":
+          return a.price - b.price;
+        case "Price High to Low":
+          return b.price - a.price;
+        case "Popularity":
+        default:
+          return b.popularity - a.popularity;
+      }
+    });
+  }, [products, searchText, selectedSort]);
 
   function handleSearchChange(inputSearch) {
     setSearchText(inputSearch);
   }
 
-  let filterandSortedProducts = Array.isArray(products)?products.filter((product) =>
-    product.name.toLowerCase().includes(searchText.toLowerCase()) ||
-    product.description.toLowerCase().includes(searchText.toLowerCase()
-  )):[];
+  function handleSortChange(sortType) {
+    setSelectedSort(sortType);
+  }
 
   return (
     <div className="max-w-6xl mx-auto">
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-12">
-        <SearchBox 
-          label="Search" 
-          placeholder="Search products" 
+        <SearchBox
+          label="Search"
+          placeholder="Search products"
           value={searchText}
-          handleSearch={(value) =>handleSearchChange(value)}
-         />
-        <Dropdown label="Sort by" options={sortList} value="Popularity" />
+          handleSearch={(value) => handleSearchChange(value)}
+        />
+        <Dropdown
+          label="Sort by"
+          options={sortList}
+          value={selectedSort}
+          handleSort={(value) => handleSortChange(value)}
+        />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-8 gap-x-6 py-12">
-        {filterandSortedProducts.length > 0 ? (
-          filterandSortedProducts.map((product) => (
+        {filteredAndSortedProducts.length > 0 ? (
+          filteredAndSortedProducts.map((product) => (
             <ProductCard key={product.productId} product={product} />
           ))
         ) : (

@@ -1,5 +1,5 @@
 import PageHeading from "./PageHeading";
-import ProductListing from "./productListing";
+import ProductListing from "./ProductListing";
 import apiClient from "../api/apiClient";
 import { useEffect, useState } from "react";
 
