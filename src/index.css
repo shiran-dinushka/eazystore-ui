@@ -2,10 +2,14 @@
 
 @import "tailwindcss";
 
-@theme{
-  --font-primary: 'Josefin Sans';
-  --color-primary: #5B21B6;
-  --color-dark: #4C1D95;
-  --color-lighter:#F3F3FF;
-  --color-light: #DDD6FE;
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-primary: "Josefin Sans";
+  --color-primary: #5b21b6;
+  --color-dark: #3c1d95;
+  --color-lighter: #f3f3ff;
+  --color-light: #ddd6fe;
+  --color-normalbg: #f3f4f6;
+  --color-darkbg: #1e2939;
 }
